@@ -159,7 +159,7 @@ public class CatanBoard extends JPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setTitle("DrawPoly");
-        frame.setSize(2000, 2000);
+        frame.setSize(1000, 1000);
         frame.setLocationRelativeTo(null);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
