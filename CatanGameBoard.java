@@ -19,14 +19,14 @@ public class CatanGameBoard extends JPanel {
         frame.setTitle("DrawPoly");
         makeFrameFullSize(frame);
         //frame.setSize(1000, 1000);
-        //frame.setLocationRelativeTo(null);
-       // frame.addWindowListener(new WindowAdapter() {
-        //    public void windowClosing(WindowEvent e) {
-        //        System.exit(0);
-         //   }
-        //});
-        //Container contentPane = frame.getContentPane();
-        //contentPane.add(new CatanGameBoard());
+        frame.setLocationRelativeTo(null);
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        Container contentPane = frame.getContentPane();
+        contentPane.add(new CatanGameBoard());
 
         frame.show();
     }
