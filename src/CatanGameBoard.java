@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
 import javax.swing.JPanel;
 
 public class CatanGameBoard extends JPanel { 
@@ -182,6 +184,8 @@ public class CatanGameBoard extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
+        //JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JPanel panel = new JPanel();
         frame.setTitle("Catan");
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(screenSize.width, screenSize.height);
@@ -191,10 +195,13 @@ public class CatanGameBoard extends JPanel {
                 System.exit(0);
             }
         });
-        Container contentPane = frame.getContentPane();
-        contentPane.add(new CatanGameBoard());
-
-
+        Container contentPane = new Container();
+        //panel = frame.getContentPane();
+        //contentPane.add(new CatanGameBoard());
+        JScrollPane scrollPane = new JScrollPane(new CatanGameBoard()); 
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
+        frame.getContentPane().add(scrollPane);        
         frame.show();
     }
 
