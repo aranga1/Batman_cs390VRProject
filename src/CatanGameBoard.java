@@ -4,12 +4,36 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-
+import javax.swing.JApplet;
 import javax.swing.JPanel;
 
-public class CatanGameBoard extends JPanel { 
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class CatanGameBoard extends JPanel implements Runnable { 
+
     static Dimension screenSize;
     Polygon[] polygons = new Polygon[19];
+    ServerSocket server;
+    PrintWriter writer = new PrintWriter(System.out);
+
+    public CatanGameBoard ( int port ) throws SocketException {
+        if ((port > 1025) && (port < 65535)) {
+            this.server = new ServerSocket(port);
+            server.setReuseAddress(true);
+        } else {
+            writer.println("Invalid port number! The port number has to be between 1025 and 65535");
+            writer.flush();
+        }
+    }
+    public CatanGameBoard() throws SocketException {
+        this.server = new ServerSocket(9999);
+        writer.println("Assigned port: " + server.getLocalPort());
+        writer.flush();
+        server.setReuseAddress(true);
+
+    }
 
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -73,7 +97,7 @@ public class CatanGameBoard extends JPanel {
         Container contentPane = new Container();
         //panel = frame.getContentPane();
         //contentPane.add(new CatanGameBoard());
-        JScrollPane scrollPane = new JScrollPane(new CatanGameBoard()); 
+        JScrollPane scrollPane = new JScrollPane( new CatanGameBoard()); 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
         //scrollPane.setHorizontalScrollBar(scrollPane.createHorizontalScrollBar());
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
