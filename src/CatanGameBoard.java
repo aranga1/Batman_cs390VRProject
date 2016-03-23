@@ -11,29 +11,13 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class CatanGameBoard extends JPanel implements Runnable { 
+public class CatanGameBoard extends JPanel {
 
     static Dimension screenSize;
     Polygon[] polygons = new Polygon[19];
-    ServerSocket server;
-    PrintWriter writer = new PrintWriter(System.out);
+    static Point[] points = new Point[54];
 
-    public CatanGameBoard ( int port ) throws SocketException {
-        if ((port > 1025) && (port < 65535)) {
-            this.server = new ServerSocket(port);
-            server.setReuseAddress(true);
-        } else {
-            writer.println("Invalid port number! The port number has to be between 1025 and 65535");
-            writer.flush();
-        }
-    }
-    public CatanGameBoard() throws SocketException {
-        this.server = new ServerSocket(9999);
-        writer.println("Assigned port: " + server.getLocalPort());
-        writer.flush();
-        server.setReuseAddress(true);
 
-    }
 
     public static void setVerticesIndex() {
         for (int i = 0; i < 3; i++) {
