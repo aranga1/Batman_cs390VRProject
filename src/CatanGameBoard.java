@@ -35,6 +35,56 @@ public class CatanGameBoard extends JPanel implements Runnable {
 
     }
 
+    public static void setVerticesIndex() {
+        for (int i = 0; i < 3; i++) {
+            points[i] = new Point(-400, (int) (-200 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 3] = new Point(-350, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 7] = new Point(-250, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 11] = new Point(-200, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 16] = new Point(-100, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            points[i + 21] = new Point(-50, (int) (-500 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            points[i + 27] = new Point(50, (int) (-500 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 33] = new Point(100, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 38] = new Point(200, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 43] = new Point(250, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 47] = new Point(350, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 3; i++) {
+            points[i + 51] = new Point(400, (int) (-200 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+    }
+
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
         polygons[0] = makeHexagon(0, 400 * Math.sin(Math.PI/3));
@@ -84,7 +134,6 @@ public class CatanGameBoard extends JPanel implements Runnable {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        //JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         JPanel panel = new JPanel();
         frame.setTitle("Catan");
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -94,16 +143,13 @@ public class CatanGameBoard extends JPanel implements Runnable {
                 System.exit(0);
             }
         });
+        setVerticesIndex();
         Container contentPane = new Container();
-        //panel = frame.getContentPane();
-        //contentPane.add(new CatanGameBoard());
-        JScrollPane scrollPane = new JScrollPane( new CatanGameBoard()); 
+        JScrollPane scrollPane = new JScrollPane(new CatanGameBoard()); 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
-        //scrollPane.setHorizontalScrollBar(scrollPane.createHorizontalScrollBar());
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
-        //scrollPane.setVerticalScrollBar(scrollPane.createVerticalScrollBar());
-        frame.getContentPane().add("Center", scrollPane); 
-        frame.setSize(screenSize.width, screenSize.height);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        frame.getContentPane().add("Center", scrollPane);
+        frame.setSize(screenSize.width,screenSize.height);
         frame.setVisible(true);
         frame.show();
     }

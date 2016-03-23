@@ -4,28 +4,97 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-
+import javax.swing.JApplet;
 import javax.swing.JPanel;
 
-public class CatanGameBoard extends JPanel { 
+import java.net.*;
+import java.io.*;
+import java.util.*;
+
+public class CatanGameBoard extends JPanel implements Runnable { 
+
     static Dimension screenSize;
+<<<<<<< HEAD
     Polygon[] polygons = new Polygon[19];
+    ServerSocket server;
+    PrintWriter writer = new PrintWriter(System.out);
+
+    public CatanGameBoard ( int port ) throws SocketException {
+        if ((port > 1025) && (port < 65535)) {
+            this.server = new ServerSocket(port);
+            server.setReuseAddress(true);
+        } else {
+            writer.println("Invalid port number! The port number has to be between 1025 and 65535");
+            writer.flush();
+        }
+    }
+    public CatanGameBoard() throws SocketException {
+        this.server = new ServerSocket(9999);
+        writer.println("Assigned port: " + server.getLocalPort());
+        writer.flush();
+        server.setReuseAddress(true);
+
+=======
+    static Polygon[] polygons = new Polygon[19];
+    static Point[] points = new Point[54];
+
+    public static void setVerticesIndex() {
+        for (int i = 0; i < 3; i++) {
+            points[i] = new Point(-400, (int) (-200 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 3] = new Point(-350, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 7] = new Point(-250, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 11] = new Point(-200, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 16] = new Point(-100, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            points[i + 21] = new Point(-50, (int) (-500 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            points[i + 27] = new Point(50, (int) (-500 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 33] = new Point(100, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 5; i++) {
+            points[i + 38] = new Point(200, (int) (-400 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 43] = new Point(250, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            points[i + 47] = new Point(350, (int) (-300 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+
+        for (int i = 0; i < 3; i++) {
+            points[i + 51] = new Point(400, (int) (-200 * Math.sin(Math.PI/3) + i * 200 * Math.sin(Math.PI/3)));
+        }
+>>>>>>> 08b045837f685af020cf18cc88e1fc896813444d
+    }
 
 	public void paintComponent(Graphics g) {
         super.paintComponent(g);
         polygons[0] = makeHexagon(0, 400 * Math.sin(Math.PI/3));
 
-<<<<<<< 13102bbb310fd6140f791586158823f880c08e36
         for (int i = 0; i < 2; i++) {
             polygons[i + 1] = makeHexagon(-150 + i * 300, 300 * Math.sin(Math.PI/3));
-=======
-        //g.translate( screenSize.width/2, screenSize.height/2);
-        
-        Polygon p1 = new Polygon();
-        for (int i = 0; i < 6; i++) {
-            p1.addPoint((int) (screenSize.width/2 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-          (int) ((screenSize.height/2) + 100 * Math.sin(i * 2 * Math.PI / 6)));
->>>>>>> Make scroll bars work
         }
 
         for (int i = 0; i < 3; i++) {
@@ -57,89 +126,6 @@ public class CatanGameBoard extends JPanel {
         for (int j = 0; j < 19; j++) {
             g.drawPolygon(polygons[j]);
         }
-<<<<<<< 13102bbb310fd6140f791586158823f880c08e36
-=======
-
-        g.drawPolygon(p10);
-        polygons[9] = p10;
-
-        Polygon p11 = new Polygon();
-        for (int i = 0; i < 6; i++) {
-            p11.addPoint((int) (screenSize.width/2 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 + 4 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-        }
-
-        g.drawPolygon(p11);
-        polygons[10] = p11;
-
-        Polygon p12 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p12.addPoint((int) (screenSize.width/2 + 300 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 + 2 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p12);
-        polygons[11] = p12;
-
-        Polygon p13 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p13.addPoint((int) (screenSize.width/2 + 300 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 - 2 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p13);
-        polygons[12] = p13;
-
-        Polygon p14 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p14.addPoint((int) ((screenSize.width/2 - 150) - 150 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 + 2 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p14);
-        polygons[13] = p14;
-
-        Polygon p15 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p15.addPoint((int) ((screenSize.width/2 - 150) - 150 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 - 2 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p15);
-        polygons[14] = p15;
-
-        Polygon p16 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p16.addPoint((int) (screenSize.width/2 + 150 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 + 3 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p16);
-        polygons[15] = p16;
-
-        Polygon p17 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p17.addPoint((int) (screenSize.width/2 + 150 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 - 3 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p17);
-        polygons[16] = p17;
-
-        Polygon p18 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p18.addPoint((int) (screenSize.width/2 -150 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 + 3 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p18);
-        polygons[17] = p18;
-
-        Polygon p19 = new Polygon();
-        for (int i = 0; i < 6; i++)
-            p19.addPoint((int) (screenSize.width/2 -150 + 100 * Math.cos(i * 2 * Math.PI / 6)),
-                    (int) ((screenSize.height/2 - 3 * 50 * Math.sqrt(3)) + 100 * Math.sin(i * 2 * Math.PI / 6)));
-
-        g.drawPolygon(p19);
-        polygons[18] = p19;
-        
-
-        polygons[0] = makeHexagon(0, 200 * Math.sin(Math.PI/3));
-        g.drawPolygon(polygons[0]);
->>>>>>> Make scroll bars work
 	}
 
     public static Polygon makeHexagon(double x, double y) {
@@ -152,7 +138,6 @@ public class CatanGameBoard extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        //JScrollPane scrollPane = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         JPanel panel = new JPanel();
         frame.setTitle("Catan");
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -162,16 +147,19 @@ public class CatanGameBoard extends JPanel {
                 System.exit(0);
             }
         });
+        setVerticesIndex();
         Container contentPane = new Container();
+<<<<<<< HEAD
         //panel = frame.getContentPane();
         //contentPane.add(new CatanGameBoard());
+        JScrollPane scrollPane = new JScrollPane( new CatanGameBoard()); 
+=======
         JScrollPane scrollPane = new JScrollPane(new CatanGameBoard()); 
+>>>>>>> 08b045837f685af020cf18cc88e1fc896813444d
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);  
-        //scrollPane.setHorizontalScrollBar(scrollPane.createHorizontalScrollBar());
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
-        //scrollPane.setVerticalScrollBar(scrollPane.createVerticalScrollBar());
-        frame.getContentPane().add("Center", scrollPane); 
-        frame.setSize(screenSize.width, screenSize.height);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        frame.getContentPane().add("Center", scrollPane);
+        frame.setSize(screenSize.width,screenSize.height);
         frame.setVisible(true);
         frame.show();
     }
